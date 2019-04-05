@@ -10,8 +10,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="GupaoLearnBase" target="1.7" />
-      <module name="onephase" target="1.7" />
+      <module name="GupaoLearnBase" target="1.8" />
+      <module name="onephase" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
