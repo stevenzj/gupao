@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="onephase:war">
+    <output-path>$PROJECT_DIR$/GupaoLearnBase/one-phase/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>onephase</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="one-phase.war">
+      <element id="artifact" artifact-name="onephase:war exploded" />
+    </root>
+  </artifact>
+</component>
