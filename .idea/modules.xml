@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/GupaoLearnBase/GupaoLearnBase.iml" filepath="$PROJECT_DIR$/GupaoLearnBase/GupaoLearnBase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/gupao.iml" filepath="$PROJECT_DIR$/gupao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GupaoLearnBase/one-phase/onephase.iml" filepath="$PROJECT_DIR$/GupaoLearnBase/one-phase/onephase.iml" />
+    </modules>
+  </component>
+</project>
