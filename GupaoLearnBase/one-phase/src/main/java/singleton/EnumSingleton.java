@@ -10,10 +10,7 @@ public enum EnumSingleton {
         this.data = data;
     }
 
-    private EnumSingleton(){
-    }
-
     public static EnumSingleton getInstance(){
-        return null;
+        return INSTANCE;
     }
 }
