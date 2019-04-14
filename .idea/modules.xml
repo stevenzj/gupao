@@ -5,6 +5,7 @@
       <module fileurl="file://$PROJECT_DIR$/GupaoLearnBase/GupaoLearnBase.iml" filepath="$PROJECT_DIR$/GupaoLearnBase/GupaoLearnBase.iml" />
       <module fileurl="file://$PROJECT_DIR$/gupao.iml" filepath="$PROJECT_DIR$/gupao.iml" />
       <module fileurl="file://$PROJECT_DIR$/GupaoLearnBase/one-phase/onephase.iml" filepath="$PROJECT_DIR$/GupaoLearnBase/one-phase/onephase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GupaoLearnBase/three-phase/threephase.iml" filepath="$PROJECT_DIR$/GupaoLearnBase/three-phase/threephase.iml" />
     </modules>
   </component>
 </project>

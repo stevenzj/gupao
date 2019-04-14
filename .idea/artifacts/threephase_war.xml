@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="threephase:war">
+    <output-path>$PROJECT_DIR$/GupaoLearnBase/three-phase/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>threephase</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="three-phase.war">
+      <element id="artifact" artifact-name="threephase:war exploded" />
+    </root>
+  </artifact>
+</component>

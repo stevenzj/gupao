@@ -6,12 +6,14 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="threephase" />
         <module name="onephase" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="GupaoLearnBase" target="1.8" />
       <module name="onephase" target="1.8" />
+      <module name="threephase" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
