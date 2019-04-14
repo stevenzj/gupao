@@ -12,17 +12,24 @@ package framework.beans;
  */
 public class STBeanWrapper {
 
+    private Object wrappedInstance;
+    private Class<?> wrappedClass;
+
+    public STBeanWrapper(Object wrappedInstance){
+        this.wrappedInstance = wrappedInstance;
+    }
+
     /**
      * Return the bean instance wrapped by this object.
      */
     public Object getWrappedInstance() {
-        return null;
+        return wrappedInstance;
     }
 
     /**
      * Return the type of the wrapped bean instance.
      */
     public Class<?> getWrappedClass() {
-        return null;
+        return wrappedInstance.getClass();
     }
 }

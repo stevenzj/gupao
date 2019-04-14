@@ -3,15 +3,16 @@
  */
 package framework.context;
 
-import framework.beans.STBeanFactory;
+import framework.core.STBeanFactory;
 import framework.beans.STBeanWrapper;
 import framework.beans.config.STBeanDefinition;
 import framework.beans.support.STBeanDefinitionReader;
 import framework.beans.support.STDefaultListableBeanFactory;
 
-import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.ObjDoubleConsumer;
 
 /**
  * @Title: STApplicationContext
@@ -25,6 +26,12 @@ public class STApplicationContext extends STDefaultListableBeanFactory implement
     private String[] configLocations;
 
     private STBeanDefinitionReader definitionReader;
+
+    // 单例Bean集合
+    private Map<String, Object> singletionObjects = new ConcurrentHashMap<>();
+
+    // 所有Bean集合
+    private Map<String, STBeanWrapper> factoryBeanInstanceCache = new ConcurrentHashMap<>();
 
     public STApplicationContext(String... configLocations){
         this.configLocations = configLocations;
@@ -49,10 +56,12 @@ public class STApplicationContext extends STDefaultListableBeanFactory implement
     @Override
     public Object getBean(String beanName) {
         //1.初始化Bean
-        instantiateBean(beanName, new STBeanDefinition());
+        STBeanWrapper beanWrapper = instantiateBean(beanName, new STBeanDefinition());
+
+        this.factoryBeanInstanceCache.put(beanName, beanWrapper);
 
         //2.注入其他Bean
-        populateBean(beanName, new STBeanDefinition(), new STBeanWrapper());
+        populateBean(beanName, new STBeanDefinition(), beanWrapper);
         return null;
     }
 
@@ -72,7 +81,28 @@ public class STApplicationContext extends STDefaultListableBeanFactory implement
         }
     }
 
-    private void instantiateBean(String beanName, STBeanDefinition stBeanDefinition) {
+    private STBeanWrapper instantiateBean(String beanName, STBeanDefinition stBeanDefinition) {
+        String className = stBeanDefinition.getBeanClassName();
+
+        Object instance = null;
+        try {
+            if(this.singletionObjects.containsKey(className)){
+                instance = singletionObjects.get(className);
+            }else {
+                Class<?> c = Class.forName(className);
+                instance = c.getInterfaces();
+
+                this.singletionObjects.put(className, instance);
+                this.singletionObjects.put(stBeanDefinition.getFactoryBeanName(), instance);
+            }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        STBeanWrapper beanWrapper = new STBeanWrapper(instance);
+
+
+        return beanWrapper;
     }
 
     private void populateBean(String beanName, STBeanDefinition stBeanDefinition, STBeanWrapper stBeanWrapper) {
