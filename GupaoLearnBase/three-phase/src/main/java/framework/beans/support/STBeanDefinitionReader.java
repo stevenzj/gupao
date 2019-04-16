@@ -62,7 +62,7 @@ public class STBeanDefinitionReader {
     }
 
     private void doScan(String scanPackageStr){
-        URL url = this.getClass().getClassLoader().getResource("/" + scanPackageStr.replaceAll("\\.", "/"));
+        URL url = this.getClass().getResource("/" + scanPackageStr.replaceAll("\\.", "/"));
         File files = new File(url.getFile());
         for(File f : files.listFiles()) {
             if(f.isDirectory()){

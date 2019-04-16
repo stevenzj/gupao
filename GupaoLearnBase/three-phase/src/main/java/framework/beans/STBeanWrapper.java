@@ -17,6 +17,7 @@ public class STBeanWrapper {
 
     public STBeanWrapper(Object wrappedInstance){
         this.wrappedInstance = wrappedInstance;
+        this.wrappedClass = wrappedInstance.getClass();
     }
 
     /**
@@ -30,6 +31,6 @@ public class STBeanWrapper {
      * Return the type of the wrapped bean instance.
      */
     public Class<?> getWrappedClass() {
-        return wrappedInstance.getClass();
+        return wrappedClass;
     }
 }

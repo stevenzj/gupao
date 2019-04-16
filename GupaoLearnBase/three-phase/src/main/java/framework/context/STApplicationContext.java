@@ -3,12 +3,16 @@
  */
 package framework.context;
 
+import framework.annotation.GPAutowired;
+import framework.annotation.GPController;
+import framework.annotation.GPService;
 import framework.core.STBeanFactory;
 import framework.beans.STBeanWrapper;
 import framework.beans.config.STBeanDefinition;
 import framework.beans.support.STBeanDefinitionReader;
 import framework.beans.support.STDefaultListableBeanFactory;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -56,13 +60,14 @@ public class STApplicationContext extends STDefaultListableBeanFactory implement
     @Override
     public Object getBean(String beanName) {
         //1.初始化Bean
-        STBeanWrapper beanWrapper = instantiateBean(beanName, new STBeanDefinition());
+        STBeanWrapper beanWrapper = instantiateBean(beanName, super.beanDefinitionMap.get(beanName));
 
         this.factoryBeanInstanceCache.put(beanName, beanWrapper);
 
         //2.注入其他Bean
-        populateBean(beanName, new STBeanDefinition(), beanWrapper);
-        return null;
+        populateBean(beanName, super.beanDefinitionMap.get(beanName), beanWrapper);
+
+        return this.factoryBeanInstanceCache.get(beanName).getWrappedInstance();
     }
 
     private void doRegisterBeanDefinition(List<STBeanDefinition> beanDefinitions) {
@@ -90,22 +95,45 @@ public class STApplicationContext extends STDefaultListableBeanFactory implement
                 instance = singletionObjects.get(className);
             }else {
                 Class<?> c = Class.forName(className);
-                instance = c.getInterfaces();
+                instance = c.newInstance();
 
                 this.singletionObjects.put(className, instance);
                 this.singletionObjects.put(stBeanDefinition.getFactoryBeanName(), instance);
             }
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
-        STBeanWrapper beanWrapper = new STBeanWrapper(instance);
-
-
-        return beanWrapper;
+        return new STBeanWrapper(instance);
     }
 
     private void populateBean(String beanName, STBeanDefinition stBeanDefinition, STBeanWrapper stBeanWrapper) {
+        Object instance = stBeanWrapper.getWrappedInstance();
+        Class<?> clazz = stBeanWrapper.getWrappedClass();
+        if(!(clazz.isAnnotationPresent(GPController.class) || clazz.isAnnotationPresent(GPService.class))){
+            return;
+        }
+
+        Field[] fields = clazz.getDeclaredFields();
+        for(Field field : fields){
+            if(!field.isAnnotationPresent(GPAutowired.class)){
+                continue;
+            }
+
+            GPAutowired gpAutowired = field.getAnnotation(GPAutowired.class);
+            String autowireBeanName = gpAutowired.value().trim();
+            if(autowireBeanName.equals("")){
+                autowireBeanName = field.getType().getName();
+            }
+
+            field.setAccessible(true);
+
+            try {
+                field.set(instance, this.factoryBeanInstanceCache.get(autowireBeanName).getWrappedInstance());
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }
