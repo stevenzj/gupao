@@ -3,8 +3,8 @@
  */
 package com.st.demo.test1;
 
-import framework.annotation.GPAutowired;
-import framework.annotation.GPController;
+import framework.annotation.STAutowired;
+import framework.annotation.STController;
 
 /**
  * @Title: ClassA
@@ -13,13 +13,13 @@ import framework.annotation.GPController;
  * @Date 2019/4/16
  * @Version V1.0
  */
-@GPController
+@STController
 public class ClassA {
 
-    @GPAutowired
+    @STAutowired
     private ClassB classB;
 
-    @GPAutowired
+    @STAutowired
     private ClassC classC;
 
     public String getAAA(){

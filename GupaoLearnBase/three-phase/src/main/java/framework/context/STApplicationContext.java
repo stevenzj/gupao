@@ -3,9 +3,9 @@
  */
 package framework.context;
 
-import framework.annotation.GPAutowired;
-import framework.annotation.GPController;
-import framework.annotation.GPService;
+import framework.annotation.STAutowired;
+import framework.annotation.STController;
+import framework.annotation.STService;
 import framework.core.STBeanFactory;
 import framework.beans.STBeanWrapper;
 import framework.beans.config.STBeanDefinition;
@@ -15,8 +15,8 @@ import framework.beans.support.STDefaultListableBeanFactory;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.ObjDoubleConsumer;
 
 /**
  * @Title: STApplicationContext
@@ -110,18 +110,18 @@ public class STApplicationContext extends STDefaultListableBeanFactory implement
     private void populateBean(String beanName, STBeanDefinition stBeanDefinition, STBeanWrapper stBeanWrapper) {
         Object instance = stBeanWrapper.getWrappedInstance();
         Class<?> clazz = stBeanWrapper.getWrappedClass();
-        if(!(clazz.isAnnotationPresent(GPController.class) || clazz.isAnnotationPresent(GPService.class))){
+        if(!(clazz.isAnnotationPresent(STController.class) || clazz.isAnnotationPresent(STService.class))){
             return;
         }
 
         Field[] fields = clazz.getDeclaredFields();
         for(Field field : fields){
-            if(!field.isAnnotationPresent(GPAutowired.class)){
+            if(!field.isAnnotationPresent(STAutowired.class)){
                 continue;
             }
 
-            GPAutowired gpAutowired = field.getAnnotation(GPAutowired.class);
-            String autowireBeanName = gpAutowired.value().trim();
+            STAutowired STAutowired = field.getAnnotation(STAutowired.class);
+            String autowireBeanName = STAutowired.value().trim();
             if(autowireBeanName.equals("")){
                 autowireBeanName = field.getType().getName();
             }
@@ -136,4 +136,11 @@ public class STApplicationContext extends STDefaultListableBeanFactory implement
         }
     }
 
+    public String[] getBeanDefinitionNames() {
+        return this.beanDefinitionMap.keySet().toArray(new String[this.beanDefinitionMap.size()]);
+    }
+
+    public Properties getConfig(){
+        return this.definitionReader.getConfig();
+    }
 }

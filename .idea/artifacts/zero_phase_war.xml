@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="zero-phase:war">
+    <output-path>$PROJECT_DIR$/GupaoLearnBase/zero-phase/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>zero-phase</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="zero-phase.war">
+      <element id="artifact" artifact-name="zero-phase:war exploded" />
+    </root>
+  </artifact>
+</component>
