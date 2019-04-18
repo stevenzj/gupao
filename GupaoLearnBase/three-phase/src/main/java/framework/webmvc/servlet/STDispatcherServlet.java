@@ -16,6 +16,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -44,7 +45,11 @@ public class STDispatcherServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        try {
+            this.doDispatch(req, resp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -164,4 +169,68 @@ public class STDispatcherServlet extends HttpServlet {
     }
 
 
+    private void doDispatch(HttpServletRequest req, HttpServletResponse resp) {
+        // 获取HandlerMapping
+        STHandlerMapping handlerMapping = this.getHandlerMapping(req);
+        if(handlerMapping == null){
+            // 404其实就是没找到HandlerMapping
+            this.processDispatchResult(req, resp, new STModelAndView("404"));
+            return;
+        }
+
+        // 获取HandlerAdaptcher
+        STHandlerAdapter handlerAdapter = this.getHandlerAdaptch(handlerMapping);
+        STModelAndView modelAndView = handlerAdapter.handle(req, resp, handlerMapping);
+
+        // 输出
+        this.processDispatchResult(req, resp, modelAndView);
+
+    }
+
+    private STHandlerMapping getHandlerMapping(HttpServletRequest req) {
+        if(this.mappingList.isEmpty()){
+            return null;
+        }
+
+        String url = req.getRequestURI();
+        String contextPath = req.getContextPath();
+
+        // replace classpath*
+        url = url.replaceAll(contextPath, "").replaceAll("/+", "");
+
+        for (STHandlerMapping mapping : this.mappingList) {
+            // regex match
+            Matcher matcher = mapping.getPattern().matcher(url);
+            return matcher.matches() ? mapping : null;
+        }
+        return null;
+    }
+
+    private void processDispatchResult(HttpServletRequest request, HttpServletResponse response,
+                                       STModelAndView modelAndView){
+        if(modelAndView == null){
+            return;
+        }
+
+        if(this.viewResolverList.isEmpty()){
+            return;
+        }
+
+        for (STViewResolver viewResolver : this.viewResolverList) {
+            STView view = viewResolver.resolveViewName(modelAndView.getViewName(), null);
+            view.render(modelAndView.getModel(), request, response);
+        }
+
+    }
+
+    private STHandlerAdapter getHandlerAdaptch(STHandlerMapping handlerMapping) {
+        if(this.handlerAdapterMap.isEmpty()){
+            return null;
+        }
+        STHandlerAdapter adapter = handlerAdapterMap.get(handlerMapping);
+        if(adapter.support(handlerMapping)){
+            return adapter;
+        }
+        return null;
+    }
 }

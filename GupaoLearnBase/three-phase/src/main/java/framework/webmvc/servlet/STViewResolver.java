@@ -4,6 +4,7 @@
 package framework.webmvc.servlet;
 
 import java.io.File;
+import java.util.Locale;
 
 /**
  * @Title: STViewResolver
@@ -19,5 +20,16 @@ public class STViewResolver {
     public STViewResolver(String templateRoot) {
         String templateRootStr = this.getClass().getClassLoader().getResource(templateRoot).getFile();
         file = new File(templateRootStr);
+    }
+
+    public STView resolveViewName(String viewName, Locale locale){
+        if(viewName == null || viewName.equals("")){
+            return null;
+        }
+
+        viewName = viewName.endsWith(".html") ? viewName : viewName + ".html";
+
+        String fileStr = (file.getPath() + "/" + viewName).replaceAll("/+", "/");
+        return new STView(new File(fileStr));
     }
 }
