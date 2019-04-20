@@ -3,6 +3,7 @@
  */
 package framework.aop.support;
 
+import framework.aop.aspect.STMethodAfterAdviceInterceptor;
 import framework.aop.aspect.STMethodBeforeAdviceInterceptor;
 import framework.aop.config.STAopConfig;
 
@@ -95,7 +96,7 @@ public class STAdviseSupport {
 
             Pattern pattern = Pattern.compile(pointCut);
 
-            // 存放调用链使用, key切点方法, value调用链
+            // 用于存放调用链, key切点方法, value调用链
             methodCache = new HashMap<>();
             for (Method method : this.targetClazz.getMethods()) {
                 String methodString = method.toString();
@@ -111,13 +112,22 @@ public class STAdviseSupport {
                         STMethodBeforeAdviceInterceptor beforeAdviceInterceptor = new STMethodBeforeAdviceInterceptor(
                                 aspectMethodMap.get(config.getAspectBefore()), c.newInstance());
                         advises.add(beforeAdviceInterceptor);
-                    }
+                    }else if(config.getAspectAfter() != null && !config.getAspectAfter().equals("")){
+                        STMethodAfterAdviceInterceptor afterAdviceInterceptor = new STMethodAfterAdviceInterceptor(
+                                aspectMethodMap.get(config.getAspectAfter()), c.newInstance());
+                        advises.add(afterAdviceInterceptor);
+                    }else if(config.getAspectAfterThrow() != null && !config.getAspectAfterThrow().equals("")){
 
+                    }
                     methodCache.put(method, advises);
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean pointCutMatch() {
+        return pointCutClassPattern.matcher(this.targetClazz.toString()).matches();
     }
 }

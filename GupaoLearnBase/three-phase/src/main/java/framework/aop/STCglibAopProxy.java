@@ -3,6 +3,8 @@
  */
 package framework.aop;
 
+import framework.aop.support.STAdviseSupport;
+
 /**
  * @Title: STCglibAopProxy
  * @Description:
@@ -11,6 +13,13 @@ package framework.aop;
  * @Version V1.0
  */
 public class STCglibAopProxy implements STAopProxy{
+
+    private STAdviseSupport adviseSupport;
+
+    public STCglibAopProxy(STAdviseSupport adviseSupport) {
+        this.adviseSupport = adviseSupport;
+    }
+
     @Override
     public STAopProxy getProxy() {
         return null;

@@ -6,6 +6,9 @@ package framework.context;
 import framework.annotation.STAutowired;
 import framework.annotation.STController;
 import framework.annotation.STService;
+import framework.aop.STAopProxy;
+import framework.aop.STCglibAopProxy;
+import framework.aop.STJdkDynamicAopProxy;
 import framework.aop.config.STAopConfig;
 import framework.aop.support.STAdviseSupport;
 import framework.core.STBeanFactory;
@@ -99,11 +102,15 @@ public class STApplicationContext extends STDefaultListableBeanFactory implement
                 Class<?> c = Class.forName(className);
                 instance = c.newInstance();
 
-                //TODO aspect
+                // aspect
                 STAdviseSupport adviseSupport = initAdviseSupport(stBeanDefinition);
                 adviseSupport.setTarget(instance);
                 adviseSupport.setTargetClazz(c);
 
+                // 若初始化的类是需要被代理的类, 则生成代理类
+                if(adviseSupport.pointCutMatch()){
+                    instance = this.getProxy(adviseSupport).getProxy();
+                }
 
                 this.singletionObjects.put(className, instance);
                 this.singletionObjects.put(stBeanDefinition.getFactoryBeanName(), instance);
@@ -113,6 +120,14 @@ public class STApplicationContext extends STDefaultListableBeanFactory implement
         }
 
         return new STBeanWrapper(instance);
+    }
+
+    private STAopProxy getProxy(STAdviseSupport adviseSupport) {
+        Class<?> targetClazz = adviseSupport.getTargetClazz();
+        if(targetClazz.getInterfaces().length > 0){
+            return new STJdkDynamicAopProxy(adviseSupport);
+        }
+        return new STCglibAopProxy(adviseSupport);
     }
 
     private void populateBean(String beanName, STBeanDefinition stBeanDefinition, STBeanWrapper stBeanWrapper) {
