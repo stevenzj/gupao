@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -64,7 +65,7 @@ public class STDispatcherServlet extends HttpServlet {
     /**
      * 初始化九大组件
      */
-    protected void initStrategies(STApplicationContext context){
+    private void initStrategies(STApplicationContext context){
         //多文件上传的组件
         initMultipartResolver(context);
 
@@ -169,7 +170,7 @@ public class STDispatcherServlet extends HttpServlet {
     }
 
 
-    private void doDispatch(HttpServletRequest req, HttpServletResponse resp) {
+    private void doDispatch(HttpServletRequest req, HttpServletResponse resp) throws Exception {
         // 获取HandlerMapping
         STHandlerMapping handlerMapping = this.getHandlerMapping(req);
         if(handlerMapping == null){
@@ -187,6 +188,9 @@ public class STDispatcherServlet extends HttpServlet {
 
     }
 
+    /**
+     * 获取HandlerMapping
+     */
     private STHandlerMapping getHandlerMapping(HttpServletRequest req) {
         if(this.mappingList.isEmpty()){
             return null;
@@ -206,6 +210,23 @@ public class STDispatcherServlet extends HttpServlet {
         return null;
     }
 
+    /**
+     * 获取HandlerAdapter
+     */
+    private STHandlerAdapter getHandlerAdaptch(STHandlerMapping handlerMapping) {
+        if(this.handlerAdapterMap.isEmpty()){
+            return null;
+        }
+        STHandlerAdapter adapter = handlerAdapterMap.get(handlerMapping);
+        if(adapter.support(handlerMapping)){
+            return adapter;
+        }
+        return null;
+    }
+
+    /**
+     * 渲染视图
+     */
     private void processDispatchResult(HttpServletRequest request, HttpServletResponse response,
                                        STModelAndView modelAndView){
         if(modelAndView == null){
@@ -223,14 +244,4 @@ public class STDispatcherServlet extends HttpServlet {
 
     }
 
-    private STHandlerAdapter getHandlerAdaptch(STHandlerMapping handlerMapping) {
-        if(this.handlerAdapterMap.isEmpty()){
-            return null;
-        }
-        STHandlerAdapter adapter = handlerAdapterMap.get(handlerMapping);
-        if(adapter.support(handlerMapping)){
-            return adapter;
-        }
-        return null;
-    }
 }

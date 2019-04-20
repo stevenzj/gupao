@@ -6,6 +6,8 @@ package framework.context;
 import framework.annotation.STAutowired;
 import framework.annotation.STController;
 import framework.annotation.STService;
+import framework.aop.config.STAopConfig;
+import framework.aop.support.STAdviseSupport;
 import framework.core.STBeanFactory;
 import framework.beans.STBeanWrapper;
 import framework.beans.config.STBeanDefinition;
@@ -97,6 +99,12 @@ public class STApplicationContext extends STDefaultListableBeanFactory implement
                 Class<?> c = Class.forName(className);
                 instance = c.newInstance();
 
+                //TODO aspect
+                STAdviseSupport adviseSupport = initAdviseSupport(stBeanDefinition);
+                adviseSupport.setTarget(instance);
+                adviseSupport.setTargetClazz(c);
+
+
                 this.singletionObjects.put(className, instance);
                 this.singletionObjects.put(stBeanDefinition.getFactoryBeanName(), instance);
             }
@@ -142,5 +150,16 @@ public class STApplicationContext extends STDefaultListableBeanFactory implement
 
     public Properties getConfig(){
         return this.definitionReader.getConfig();
+    }
+
+    private STAdviseSupport initAdviseSupport(STBeanDefinition beanDefinition) {
+        STAopConfig aopConfig = new STAopConfig();
+        aopConfig.setPointCut(this.definitionReader.getConfig().getProperty("pointCut"));
+        aopConfig.setAspectClass(this.definitionReader.getConfig().getProperty("aspectClass"));
+        aopConfig.setAspectBefore(this.definitionReader.getConfig().getProperty("aspectBefore"));
+        aopConfig.setAspectAfter(this.definitionReader.getConfig().getProperty("aspectAfter"));
+        aopConfig.setAspectAfterThrow(this.definitionReader.getConfig().getProperty("aspectAfterThrow"));
+        aopConfig.setAspectAfterThrowingName(this.definitionReader.getConfig().getProperty("aspectAfterThrowingName"));
+        return new STAdviseSupport(aopConfig);
     }
 }
