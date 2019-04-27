@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.st.mybatis.test1.mapper.PassportMapper">
+    <sql id="passportColumns">
+        passport_id AS "passportId",
+        age AS "age",
+        hobby AS "hobby"
+    </sql>
+
+    <select id="getById" resultType="passport">
+        SELECT
+        <include refid="passportColumns"/>
+        FROM passport
+        WHERE passport_id = #{id}
+    </select>
+
+    <select id="getList" resultType="passport">
+        SELECT
+        <include refid="passportColumns"/>
+        FROM passport
+    </select>
+</mapper>

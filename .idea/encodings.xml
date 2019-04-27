@@ -2,6 +2,7 @@
 <project version="4">
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/GupaoLearnBase" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/GupaoLearnBase/four-phase" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/GupaoLearnBase/one-phase" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/GupaoLearnBase/three-phase" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/GupaoLearnBase/zero-phase" charset="UTF-8" />

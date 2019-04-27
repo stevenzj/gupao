@@ -8,10 +8,12 @@
         <outputRelativeToContentRoot value="true" />
         <module name="zero-phase" />
         <module name="threephase" />
+        <module name="fourphase" />
         <module name="onephase" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="fourphase" target="1.8" />
       <module name="GupaoLearnBase" target="1.8" />
       <module name="onephase" target="1.8" />
       <module name="threephase" target="1.8" />

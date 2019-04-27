@@ -1,0 +1,33 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="fourphase:war exploded">
+    <output-path>$PROJECT_DIR$/GupaoLearnBase/four-phase/target/four-phase</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>fourphase</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="fourphase" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.5.1" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.47" />
+          <element id="library" level="project" name="Maven: cglib:cglib:3.2.10" />
+          <element id="library" level="project" name="Maven: org.ow2.asm:asm:7.0" />
+          <element id="library" level="project" name="Maven: org.apache.ant:ant:1.10.3" />
+          <element id="library" level="project" name="Maven: org.apache.ant:ant-launcher:1.10.3" />
+          <element id="library" level="project" name="Maven: junit:junit:4.13-beta-2" />
+          <element id="library" level="project" name="Maven: org.hamcrest:hamcrest-core:1.3" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/GupaoLearnBase/four-phase/target/four-phase/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="fourphase/web/Web" />
+    </root>
+  </artifact>
+</component>
