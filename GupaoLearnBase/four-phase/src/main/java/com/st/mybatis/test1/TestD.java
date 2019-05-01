@@ -28,7 +28,12 @@ public class TestD {
         InputStream is = Resources.getResourceAsStream(resourceStr);
         SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(is);
         SqlSession session = sessionFactory.openSession();
-        Configuration configuration = session.getConfiguration();
+
+        session.update("");
+        session.update("", null);
+
+
+
         AccountMapper accountMapper = session.getMapper(AccountMapper.class);
         AccountAndPassport accountAndPassport = accountMapper.getAll(1L);
         System.out.println(accountAndPassport.getClass());
