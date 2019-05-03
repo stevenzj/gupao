@@ -5,7 +5,7 @@
 
     <settings>
         <!-- sql log -->
-        <setting name="logImpl" value="STDOUT_LOGGING"/>
+        <!--<setting name="logImpl" value="STDOUT_LOGGING"/>-->
 
         <!-- 全局二级缓存, 默认true, 开启 -->
         <setting name="cacheEnabled" value="true"/>
@@ -28,6 +28,11 @@
         <typeAlias alias="accountAndPassport" type="com.st.mybatis.test1.entity.AccountAndPassport"/>
     </typeAliases>
 
+    <plugins>
+        <!--<plugin interceptor="com.st.mybatis.test1.interceptor.PageInterceptor"/>-->
+        <plugin interceptor="com.st.mybatis.test1.interceptor.TimeConsumeInterceptor"/>
+    </plugins>
+
     <environments default="test">
         <environment id="test">
             <transactionManager type="JDBC"/>
@@ -44,4 +49,5 @@
         <mapper resource="AccountMapper.xml"/>
         <mapper resource="PassportMapper.xml"/>
     </mappers>
+
 </configuration>
