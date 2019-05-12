@@ -6,13 +6,15 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="fivephase" />
         <module name="zero-phase" />
         <module name="threephase" />
-        <module name="fourphase" />
         <module name="onephase" />
+        <module name="fourphase" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="fivephase" target="1.8" />
       <module name="fourphase" target="1.8" />
       <module name="GupaoLearnBase" target="1.8" />
       <module name="onephase" target="1.8" />

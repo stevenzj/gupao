@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GupaoLearnBase/GupaoLearnBase.iml" filepath="$PROJECT_DIR$/GupaoLearnBase/GupaoLearnBase.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GupaoLearnBase/five-phase/fivephase.iml" filepath="$PROJECT_DIR$/GupaoLearnBase/five-phase/fivephase.iml" />
       <module fileurl="file://$PROJECT_DIR$/GupaoLearnBase/four-phase/fourphase.iml" filepath="$PROJECT_DIR$/GupaoLearnBase/four-phase/fourphase.iml" />
       <module fileurl="file://$PROJECT_DIR$/gupao.iml" filepath="$PROJECT_DIR$/gupao.iml" />
       <module fileurl="file://$PROJECT_DIR$/GupaoLearnBase/one-phase/onephase.iml" filepath="$PROJECT_DIR$/GupaoLearnBase/one-phase/onephase.iml" />
