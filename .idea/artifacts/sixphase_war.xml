@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="sixphase:war">
+    <output-path>$PROJECT_DIR$/GupaoLearnBase/six-phase/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>sixphase</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="six-phase.war">
+      <element id="artifact" artifact-name="sixphase:war exploded" />
+    </root>
+  </artifact>
+</component>

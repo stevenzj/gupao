@@ -16,6 +16,7 @@
       <module>zero-phase</module>
       <module>four-phase</module>
     <module>five-phase</module>
+      <module>six-phase</module>
   </modules>
 
   <repositories>

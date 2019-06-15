@@ -1,0 +1,23 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="sixphase:war exploded">
+    <output-path>$PROJECT_DIR$/GupaoLearnBase/six-phase/target/six-phase</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <exploded>true</exploded>
+        <module>sixphase</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="root">
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="sixphase" />
+        </element>
+      </element>
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/GupaoLearnBase/six-phase/target/six-phase/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="javaee-facet-resources" facet="sixphase/web/Web" />
+    </root>
+  </artifact>
+</component>

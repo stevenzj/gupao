@@ -8,8 +8,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="fivephase" />
         <module name="zero-phase" />
-        <module name="threephase" />
         <module name="onephase" />
+        <module name="sixphase" />
+        <module name="threephase" />
         <module name="fourphase" />
       </profile>
     </annotationProcessing>
@@ -18,6 +19,7 @@
       <module name="fourphase" target="1.8" />
       <module name="GupaoLearnBase" target="1.8" />
       <module name="onephase" target="1.8" />
+      <module name="sixphase" target="1.8" />
       <module name="threephase" target="1.8" />
       <module name="zero-phase" target="1.8" />
     </bytecodeTargetLevel>
